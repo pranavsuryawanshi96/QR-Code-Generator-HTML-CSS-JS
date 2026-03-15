@@ -10,7 +10,33 @@ generateBtn.addEventListener("click", (e) => {
   generateQRCode();
 });
 
+sizes.addEventListener("change", (e) => {
+  size = e.target.value;
+  isEmptyInput();
+});
+
+downloadBtn.addEventListener("click", () => {
+  let img = document.querySelector(".qr-body img");
+
+  if (img !== null) {
+    let imgAttr = img.getAttribute("src");
+    downloadBtn.setAttribute("href", imgAttr);
+  } else {
+    downloadBtn.setAttribute(
+      "href",
+      `${document.querySelector("canvas").toDataURL()}`,
+    );
+  }
+});
+
+function isEmptyInput() {
+  qrText.value.length > 0
+    ? generateQRCode()
+    : alert("Enter the text or URL to generate your QR code");
+}
+
 function generateQRCode() {
+  qrContainer.innerHTML = "";
   new QRCode(qrContainer, {
     text: qrText.value,
     height: size,

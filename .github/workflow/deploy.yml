@@ -1,0 +1,30 @@
+name: QR Code Generator Deployment
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: "Release Tag to Deploy (e.g., v1.0.0)"
+        required: true
+        default: "v1.0.0"
+
+      deploy_target:
+        description: "What do you want to deploy?"
+        required: true
+        default: "frontend"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Show Inputs
+        run: |
+          echo "Release Tag: ${{ github.event.inputs.release_tag }}"
+          echo "Deploy Target: ${{ github.event.inputs.deploy_target }}"
+
+      - name: Example Deployment Step
+        run: echo "Deploying ${{ github.event.inputs.deploy_target }}"
